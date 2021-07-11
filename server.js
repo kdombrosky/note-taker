@@ -29,34 +29,27 @@ app.get('/api/notes', (req, res) => {
 })
 
 // post notes to file 
-// app.post('/api/notes', (req, res) => {
-//     // const note = createNewNote(req.body, db);
-//     // res.json(note);
-//     const note = req.body; 
+app.post('/api/notes', (req, res) => {
+    const newNote = req.body; 
+    const currentNotes = JSON.parse(fs.readFileSync('./db/db.json'));
 
-//     // receive a new note to save on the request body
-//     // add note to db.json file
-//     // return new note to client
-//     // each note will need a unique id 
-// })
+    currentNotes.push(newNote);
+
+    fs.writeFileSync(
+        path.join(__dirname, './db/db.json'),
+        JSON.stringify( currentNotes, null, 2)
+    )
+    // receive a new note to save on the request body
+    // add note to db.json file
+    // return new note to client
+    // each note will need a unique id 
+})
 
 // open home page
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, './public/index.html'))
 });
 
-// function createNewNote
-// function createNewNote(body, dbArray) {
-//     const note = body;
-//     dbArray.push(note);
-
-//     fs.writeFileSync(
-//         path.join(__dirname, './db/db.json'),
-//         JSON.stringify([ dbArray ], null, 2)
-//     );
-
-//     return note; 
-// }
 
 
 // to delete

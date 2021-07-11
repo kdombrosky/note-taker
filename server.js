@@ -26,7 +26,7 @@ app.get('/api/notes', (req, res) => {
 })
 
 // read and return specific note from file 
-app.get('/api/notes:id', (req, res) => {
+app.get('/api/notes/:id', (req, res) => {
     const currentNotes = JSON.parse(fs.readFileSync('./db/db.json'));
     // use Number to parse from string
     res.json(currentNotes[(Number(req.params.id) - 1)])
@@ -53,6 +53,18 @@ app.post('/api/notes', (req, res) => {
     // return new note to client
     res.json(currentNotes);
 })
+
+// to delete note
+app.delete('/api/notes/:id', (req, res) => {
+    const currentNotes = JSON.parse(fs.readFileSync('./db/db.json'));
+    console.log(currentNotes);
+    const id = req.params.id;
+    console.log(id);
+    
+    // find note with current id 
+    const newNotes = currentNotes.filter(note => note.id === Number(req.params.id));
+    console.log(newNotes);
+});
 
 // serve index.html
 app.get('*', (req, res) => {

@@ -3,7 +3,6 @@ const PORT = process.env.PORT || 3001;
 const fs = require('fs');
 const path = require('path');
 const app = express(); 
-const db = require('./db/db.json');
 
 
 // middleware
@@ -24,25 +23,30 @@ app.get('/api/notes', (req, res) => {
     fs.readFile('./db/db.json', (err, data) => {
         var readData = JSON.parse(data); 
         res.json(readData); 
-        console.log(db);
     });
 })
 
 // post notes to file 
 app.post('/api/notes', (req, res) => {
-    const newNote = req.body; 
+    // receive a new note to save on the request body
+    // each note will need a unique id 
     const currentNotes = JSON.parse(fs.readFileSync('./db/db.json'));
+    // set id based on what the next index of the array will be
+    req.body.id = currentNotes.length.toString();
+    const newNote = req.body; 
+    console.log(req.body);
+    
 
     currentNotes.push(newNote);
 
+    // add note to db.json file
     fs.writeFileSync(
         path.join(__dirname, './db/db.json'),
         JSON.stringify( currentNotes, null, 2)
-    )
-    // receive a new note to save on the request body
-    // add note to db.json file
+    );
+    
     // return new note to client
-    // each note will need a unique id 
+    res.json(currentNotes);
 })
 
 // open home page

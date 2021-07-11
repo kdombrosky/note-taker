@@ -4,8 +4,7 @@
 This is an Express app deployed on Heroku, that allows users to write, save, and read notes from the server's database. 
 <br/><br/>
 
-Link to walkthrough: https://drive.google.com/file/d/1lBcpIQ3esix3IDuI-bB_cHPQBMf19iBl/view
-![README generator preview](https://github.com/kdombrosky/readme-generator/blob/main/extra/preview.png?raw=true)
+![Note-taker preview]()
 <br/><br/>
 
 ## Table of Contents 

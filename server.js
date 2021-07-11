@@ -1,30 +1,36 @@
 const express = require('express');
-const PORT = process.env.PORT || 3001;
-const fs = require('fs');
 const path = require('path');
+const fs = require('fs');
+
 const app = express(); 
+const PORT = process.env.PORT || 3001;
 
 
 // middleware
-// parse incoming data
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-// allow public folder to be served
 app.use(express.static('public'));
 
 
-// import routes 
+// serve notes.html
 app.get('/notes', (req, res) => {
     res.sendFile(path.join(__dirname, './public/notes.html'))
 });
 
-// read and return notes from file 
+// read and return all notes from file 
 app.get('/api/notes', (req, res) => {
     fs.readFile('./db/db.json', (err, data) => {
         var readData = JSON.parse(data); 
         res.json(readData); 
     });
 })
+
+// read and return specific note from file 
+app.get('/api/notes:id', (req, res) => {
+    const currentNotes = JSON.parse(fs.readFileSync('./db/db.json'));
+    // use Number to parse from string
+    res.json(currentNotes[(Number(req.params.id) - 1)])
+});
 
 // post notes to file 
 app.post('/api/notes', (req, res) => {
@@ -36,7 +42,6 @@ app.post('/api/notes', (req, res) => {
     const newNote = req.body; 
     console.log(req.body);
     
-
     currentNotes.push(newNote);
 
     // add note to db.json file
@@ -49,7 +54,7 @@ app.post('/api/notes', (req, res) => {
     res.json(currentNotes);
 })
 
-// open home page
+// serve index.html
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, './public/index.html'))
 });

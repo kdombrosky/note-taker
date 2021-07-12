@@ -60,9 +60,9 @@ app.delete('/api/notes/:id', (req, res) => {
     console.log(currentNotes);
     const id = req.params.id;
     console.log(id);
-    
+
     // find note with current id 
-    const newNotes = currentNotes.filter(note => note.id === Number(req.params.id));
+    const newNotes = currentNotes.filter(note => note.id !== req.params.id);
     console.log(newNotes);
 });
 

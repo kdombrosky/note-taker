@@ -73,15 +73,6 @@ app.get('*', (req, res) => {
 
 
 
-// to delete
-// pull out what they send
-// build new note with an id attached
-// send back new note with id 
-// filter out specific ids 
-
-// req.params.id './api/animals:id' 
-
-
 app.listen(PORT, () => {
     console.log(`Note Taker server now on port ${PORT}!`);
 });

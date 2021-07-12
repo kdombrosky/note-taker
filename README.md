@@ -4,7 +4,7 @@
 This is an Express app deployed on Heroku, that allows users to write, save, and read their own notes from the server's back-end. 
 <br/><br/>
 
-![Note-taker preview]()
+![Note-taker preview](https://github.com/kdombrosky/note-taker/blob/main/extra/web-preview.png?raw=true)
 <br/><br/>
 
 ## Table of Contents 
